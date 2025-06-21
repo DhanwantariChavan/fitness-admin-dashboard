@@ -1,0 +1,159 @@
+.calendar-event {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.calendar-event:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.calendar-event.compact {
+  padding: 4px 6px;
+  font-size: 0.7rem;
+  line-height: 1.2;
+}
+
+.calendar-event.compact .event-time {
+  font-size: 0.6rem;
+  opacity: 0.9;
+}
+
+.calendar-event.compact .event-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Event Type Colors */
+.event-yoga {
+  background-color: #9c27b0;
+}
+
+.event-hiit {
+  background-color: #f44336;
+}
+
+.event-cardio {
+  background-color: #2196f3;
+}
+
+.event-strength {
+  background-color: #ff9800;
+}
+
+.event-pilates {
+  background-color: #e91e63;
+}
+
+.event-zumba {
+  background-color: #ff5722;
+}
+
+.event-crossfit {
+  background-color: #795548;
+}
+
+.event-swimming {
+  background-color: #00bcd4;
+}
+
+.event-default {
+  background-color: var(--primary-color);
+}
+
+/* Full Event Card */
+.calendar-event:not(.compact) {
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.event-title h4 {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.event-type {
+  font-size: 0.7rem;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+.status-badge {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 10px;
+  background-color: rgba(255,255,255,0.2);
+  font-weight: 500;
+}
+
+.status-badge.scheduled {
+  background-color: rgba(76, 175, 80, 0.2);
+}
+
+.status-badge.cancelled {
+  background-color: rgba(244, 67, 54, 0.2);
+}
+
+.status-badge.completed {
+  background-color: rgba(158, 158, 158, 0.2);
+}
+
+.event-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.event-detail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+}
+
+.detail-icon {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.event-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: rgba(255,255,255,0.8);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.7rem;
+  opacity: 0.9;
+}
