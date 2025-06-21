@@ -5,6 +5,7 @@ A comprehensive React-based admin dashboard for managing fitness center chains w
 ## Screenshots
 
 ### Dashboard Overview
+
 ![Dashboard Overview](./screenshots/dashboard-overview.PNG)
 
 ![Dashboard Analytics](./screenshots/dashboard-analytics.PNG)
@@ -14,11 +15,11 @@ A comprehensive React-based admin dashboard for managing fitness center chains w
 ![Dashboard Tasks](./screenshots/dashboard-tasks.PNG)
 
 ### Member Management
-![Member Management](./screenshots/member-management.PNG)
+![Member Management](./screenshots/members-management.PNG)
 
 
 ### Class Scheduling
-![Class Scheduling](./screenshots/class-management.PNG)
+![Class Scheduling](./screenshots/classes-management.PNG)
 
 
 ### Trainer Management
