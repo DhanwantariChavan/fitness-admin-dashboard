@@ -1,74 +1,74 @@
-#  Fitness Center Chain Management Dashboard
+# Fitness Center Chain Management Dashboard
 
 A comprehensive React-based admin dashboard for managing fitness center chains with advanced analytics, member management, class scheduling, and facility operations.
 
-##  Screenshots
+## Screenshots
 
 ### Dashboard Overview
-![Dashboard Overview](./screenshots/dashboard-overview.png)
-*Main dashboard showing key metrics, revenue charts, and facility utilization*
+![Dashboard Overview](./screenshots/dashboard-overview.PNG)
+
+![Dashboard Analytics](./screenshots/dashboard-analytics.PNG)
+
+![Dashboard Calendar](./screenshots/dashboard-calendar.PNG)
+
+![Dashboard Tasks](./screenshots/dashboard-tasks.PNG)
 
 ### Member Management
-![Member Management](./screenshots/member-management.png)
-*Member directory with advanced filtering and analytics*
+![Member Management](./screenshots/member-management.PNG)
+
 
 ### Class Scheduling
-![Class Scheduling](./screenshots/class-scheduling.png)
-*Interactive calendar with drag-and-drop functionality*
+![Class Scheduling](./screenshots/class-management.PNG)
+
 
 ### Trainer Management
-![Trainer Management](./screenshots/trainer-management.png)
-*Trainer directory with performance metrics and analytics*
+![Trainer Management](./screenshots/trainers-management.PNG)
 
 ### Equipment Management
-![Equipment Kanban](./screenshots/equipment-kanban.png)
-*Kanban board for equipment maintenance tracking*
+![Equipment Kanban](./screenshots/equipment-management.PNG)
+
 
 ### Revenue Analytics
-![Revenue Analytics](./screenshots/revenue-analytics.png)
-*Comprehensive financial dashboard with charts and trends*
+![Revenue Analytics](./screenshots/revenue-analytics.PNG)
 
-### Dark Theme
-![Dark Theme](./screenshots/dark-theme.png)
-*Dashboard in dark mode with complete theme customization*
+### Forms
+![Add New Class](./screenshots/new-class-form.PNG)
+![Add New Member](./screenshots/new-member-form.PNG)
+![Add New Trainer](./screenshots/new-trainer-form.PNG)
 
-### Mobile Responsive
-<div align="center">
-  <img src="./screenshots/mobile-view.png" alt="Mobile View" width="300">
-</div>
 
-*Fully responsive design optimized for mobile devices*
 
-##  Features
 
-###  Core Dashboard Modules
+## Features
 
-####  **Overview Dashboard**
+### Core Dashboard Modules
+
+#### **Overview Dashboard**
 - Real-time key metrics cards (Total members, Active classes, Monthly revenue, Trainers)
 - Interactive revenue charts with monthly/yearly trends
 - Member growth analytics with acquisition tracking
 - Facility utilization insights across multiple locations
 
-####  **Member Management**
+#### **Member Management**
 - Advanced member directory with sortable/filterable tables
 - Quick actions for profile management and membership operations
 
-####  **Class Scheduling & Management**
+#### **Class Scheduling & Management**
 - Multiple view modes (Weekly, Monthly, Daily)
 
-####  **Trainer Management**
+#### **Trainer Management**
 - Staff directory with performance metrics
 - Trainer analytics (Ratings, Retention rates, Revenue generation)
 - Schedule management and availability tracking
 - Performance insights and client satisfaction scores
 
-####  **Equipment Management**
+#### **Equipment Management**
 - Equipment inventory with maintenance schedules
 - Interactive Kanban board for maintenance tasks
 - Facility utilization charts and peak hour analysis
 - Equipment status monitoring and downtime tracking
 
-####  **Revenue Analytics**
+#### **Revenue Analytics**
 - Comprehensive revenue dashboards
 - Payment tracking and overdue alerts
 - Membership trend analysis and churn prediction
@@ -76,26 +76,26 @@ A comprehensive React-based admin dashboard for managing fitness center chains w
 
 ### Interactive Features
 
-####  **Calendar Functionality**
+#### **Calendar Functionality**
 - Quick event creation
 - Conflict detection and resolution
 
-####  **Kanban Board**
+#### **Kanban Board**
 - Due date indicators
 - Task assignment and progress tracking
 - Detailed card information
 
-#### 📈 **Chart Interactions**
+#### **Chart Interactions**
 - Hover effects with detailed tooltips
 - Click-to-filter functionality
 - Real-time data updates
 
-###  Customization Options
+### Customization Options
 
-####  **Theme Support**
+#### **Theme Support**
 - **Dark Mode**: Complete dark theme implementation
 
-##  Tech Stack
+## Tech Stack
 
 ### Frontend
 - **React.js** - Modern component-based architecture
@@ -103,7 +103,7 @@ A comprehensive React-based admin dashboard for managing fitness center chains w
 - **React Router** - Client-side routing
 - **Recharts** - Interactive data visualization
 
-##  Key Functionalities
+## Key Functionalities
 
 ### Member Management
 - Search and filtering capabilities
@@ -128,7 +128,7 @@ A comprehensive React-based admin dashboard for managing fitness center chains w
 - Location-wise financial performance
 - Churn prediction and retention analytics
 
-##  Author
+## Author
 
 **Dhanwantari Chavan**
 - GitHub: [@DhanwantariChavan](https://github.com/DhanwantariChavan)
@@ -136,4 +136,4 @@ A comprehensive React-based admin dashboard for managing fitness center chains w
 
 ---
 
-**Built with ❤️ for the fitness community**
+**Built with love for the fitness community**
