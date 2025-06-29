@@ -2,6 +2,35 @@
 
 A comprehensive React-based admin dashboard for managing fitness center chains with advanced analytics, member management, class scheduling, and facility operations.
 
+
+## Weekly Progress
+
+
+### **Week 4**
+* **UI Enhancements**
+  * Refined layout, padding, spacing, and typography
+  * Improved visual consistency and responsiveness
+* **Dark Mode Added**
+  * Toggle support for light/dark themes
+  * Full theme support across all components
+* **Theme Updates**
+  * Unified color scheme and improved accessibility
+  * Hover effects, animations, and better interaction states
+
+#### Screenshots (Week 4 - UI/Theme Update)
+![Dark Mode Dashboard](./screenshots/dark-mode.PNG)
+
+![Dark Mode Calendar](./screenshots/dark-mode-calendar.PNG)
+
+
+
+### **Week 3**
+* Initial dashboard layout and components
+* Member, Trainer, Class, and Equipment management modules
+* Revenue analytics with charts and graphs
+* Basic calendar and Kanban functionality
+* Core routing and form features implemented
+
 ## Screenshots
 
 ### Dashboard Overview
@@ -36,8 +65,6 @@ A comprehensive React-based admin dashboard for managing fitness center chains w
 ![Add New Class](./screenshots/new-class-form.PNG)
 ![Add New Member](./screenshots/new-member-form.PNG)
 ![Add New Trainer](./screenshots/new-trainer-form.PNG)
-
-
 
 
 ## Features
@@ -138,3 +165,4 @@ A comprehensive React-based admin dashboard for managing fitness center chains w
 ---
 
 **Built with love for the fitness community**
+

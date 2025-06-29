@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Line, AreaChart, Area } from 'recharts';
 import "./Dashboard.css"; 
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,26 @@ import Calendar from '../components/calendar/Calendar';
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState('overview');
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
+
+  // Load dark mode preference from localStorage on component mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('darkMode');
+    if (savedTheme) {
+      setIsDarkMode(JSON.parse(savedTheme));
+    }
+  }, []);
+
+  // Apply dark mode class to document body
+  useEffect(() => {
+    document.body.classList.toggle('dark-mode', isDarkMode);
+    localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   // Enhanced sample data for charts
   const membershipData = [
@@ -19,10 +38,10 @@ const Dashboard = () => {
   ];
 
   const classData = [
-    { name: 'Yoga', value: 35, color: '#1e40af' },
-    { name: 'Cardio', value: 25, color: '#059669' },
-    { name: 'Strength', value: 20, color: '#dc2626' },
-    { name: 'Pilates', value: 20, color: '#7c3aed' }
+    { name: 'Yoga', value: 35, color: isDarkMode ? '#3b82f6' : '#1e40af' },
+    { name: 'Cardio', value: 25, color: isDarkMode ? '#10b981' : '#059669' },
+    { name: 'Strength', value: 20, color: isDarkMode ? '#f87171' : '#dc2626' },
+    { name: 'Pilates', value: 20, color: isDarkMode ? '#a78bfa' : '#7c3aed' }
   ];
 
   const revenueData = [
@@ -88,6 +107,30 @@ const Dashboard = () => {
     </div>
   );
 
+  // Dark Mode Toggle Button Component
+  const DarkModeToggle = () => (
+    <button 
+      className="dark-mode-toggle"
+      onClick={toggleDarkMode}
+      aria-label="Toggle dark mode"
+    >
+      <div className={`toggle-track ${isDarkMode ? 'dark' : 'light'}`}>
+        <div className={`toggle-thumb ${isDarkMode ? 'dark' : 'light'}`}>
+          <span className="toggle-icon">
+            {isDarkMode ? '🌙' : '☀️'}
+          </span>
+        </div>
+      </div>
+    </button>
+  );
+
+  const getChartColors = () => ({
+    grid: isDarkMode ? '#374151' : '#f1f5f9',
+    text: isDarkMode ? '#d1d5db' : '#64748b',
+    background: isDarkMode ? '#1f2937' : 'white',
+    border: isDarkMode ? '#374151' : '#e2e8f0'
+  });
+
   const renderOverview = () => (
     <div className="dashboard-content">
       {/* Stats Cards */}
@@ -128,29 +171,29 @@ const Dashboard = () => {
           <h3 className="card-title">Quick Actions</h3>
           <div className="card-divider"></div>
         </div>
-     <div className="quick-actions-grid">
-  {[
-    { label: 'Add New Member', icon: '👤', colorClass: 'blue', path: '/members/new' },
-    { label: 'Add New Class', icon: '🏃‍♀️', colorClass: 'emerald', path: '/classes/new' },
-    { label: 'Add New Trainer', icon: '💪', colorClass: 'purple', path: '/trainers/new' },
-    { label: 'View Calendar', icon: '📅', colorClass: 'amber', path: '/calendar' }
-  ].map((action, index) => (
-    <button
-      key={index}
-      className={`quick-action-btn ${action.colorClass}`}
-      onClick={() => {
-        if (action.path) {
-          navigate(action.path);
-        } else if (action.action === 'calendar') {
-          setActiveView('calendar');
-        }
-      }}
-    >
-      <span className="action-icon">{action.icon}</span>
-      <span className="action-label">{action.label}</span>
-    </button>
-  ))}
-</div>
+        <div className="quick-actions-grid">
+          {[
+            { label: 'Add New Member', icon: '👤', colorClass: 'blue', path: '/members/new' },
+            { label: 'Add New Class', icon: '🏃‍♀️', colorClass: 'emerald', path: '/classes/new' },
+            { label: 'Add New Trainer', icon: '💪', colorClass: 'purple', path: '/trainers/new' },
+            { label: 'View Calendar', icon: '📅', colorClass: 'amber', path: '/calendar' }
+          ].map((action, index) => (
+            <button
+              key={index}
+              className={`quick-action-btn ${action.colorClass}`}
+              onClick={() => {
+                if (action.path) {
+                  navigate(action.path);
+                } else if (action.action === 'calendar') {
+                  setActiveView('calendar');
+                }
+              }}
+            >
+              <span className="action-icon">{action.icon}</span>
+              <span className="action-label">{action.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Recent Activity */}
@@ -180,133 +223,146 @@ const Dashboard = () => {
     </div>
   );
 
-  const renderCharts = () => (
-    <div className="dashboard-content">
-      <div className="charts-grid">
-        {/* Membership Growth */}
-        <div className="chart-card">
+  const renderCharts = () => {
+    const colors = getChartColors();
+    
+    return (
+      <div className="dashboard-content">
+        <div className="charts-grid">
+          {/* Membership Growth */}
+          <div className="chart-card">
+            <div className="chart-header">
+              <h3 className="chart-title">Membership Growth</h3>
+              <div className="chart-legend">
+                <div className="legend-item">
+                  <div className="legend-dot blue"></div>
+                  <span className="legend-text">Members</span>
+                </div>
+                <div className="legend-item">
+                  <div className="legend-dot gray"></div>
+                  <span className="legend-text">Target</span>
+                </div>
+              </div>
+            </div>
+            <ResponsiveContainer width="100%" height={280}>
+              <AreaChart data={membershipData}>
+                <defs>
+                  <linearGradient id="memberGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke={colors.grid} />
+                <XAxis dataKey="month" stroke={colors.text} fontSize={12} />
+                <YAxis stroke={colors.text} fontSize={12} />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: colors.background, 
+                    border: `1px solid ${colors.border}`, 
+                    borderRadius: '8px', 
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                    color: colors.text
+                  }}
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="members" 
+                  stroke="#3b82f6" 
+                  strokeWidth={2} 
+                  fill="url(#memberGradient)" 
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="target" 
+                  stroke={colors.text} 
+                  strokeWidth={2} 
+                  strokeDasharray="5 5" 
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Class Distribution */}
+          <div className="chart-card">
+            <div className="chart-header">
+              <h3 className="chart-title">Class Distribution</h3>
+              <span className="chart-subtitle">Current Month</span>
+            </div>
+            <ResponsiveContainer width="100%" height={280}>
+              <PieChart>
+                <Pie
+                  data={classData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={90}
+                  innerRadius={50}
+                  dataKey="value"
+                  label={({name, value}) => `${name}: ${value}%`}
+                  labelLine={false}
+                >
+                  {classData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip 
+                  formatter={(value) => [`${value}%`, 'Percentage']}
+                  contentStyle={{ 
+                    backgroundColor: colors.background, 
+                    border: `1px solid ${colors.border}`,
+                    color: colors.text
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="pie-legend">
+              {classData.map((entry, index) => (
+                <div key={index} className="pie-legend-item">
+                  <div className="pie-legend-dot" style={{backgroundColor: entry.color}}></div>
+                  <span className="pie-legend-text">{entry.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Revenue Chart */}
+        <div className="chart-card full-width">
           <div className="chart-header">
-            <h3 className="chart-title">Membership Growth</h3>
+            <h3 className="chart-title">Revenue & Expenses</h3>
             <div className="chart-legend">
               <div className="legend-item">
-                <div className="legend-dot blue"></div>
-                <span className="legend-text">Members</span>
+                <div className="legend-dot emerald"></div>
+                <span className="legend-text">Revenue</span>
               </div>
               <div className="legend-item">
-                <div className="legend-dot gray"></div>
-                <span className="legend-text">Target</span>
+                <div className="legend-dot red"></div>
+                <span className="legend-text">Expenses</span>
               </div>
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={280}>
-            <AreaChart data={membershipData}>
-              <defs>
-                <linearGradient id="memberGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
-                  <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-              <XAxis dataKey="month" stroke="#64748b" fontSize={12} />
-              <YAxis stroke="#64748b" fontSize={12} />
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={revenueData} barGap={8}>
+              <CartesianGrid strokeDasharray="3 3" stroke={colors.grid} />
+              <XAxis dataKey="month" stroke={colors.text} fontSize={12} />
+              <YAxis stroke={colors.text} fontSize={12} />
               <Tooltip 
+                formatter={(value, name) => [`$${value.toLocaleString()}`, name === 'revenue' ? 'Revenue' : 'Expenses']}
                 contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #e2e8f0', 
+                  backgroundColor: colors.background, 
+                  border: `1px solid ${colors.border}`, 
                   borderRadius: '8px', 
-                  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' 
+                  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                  color: colors.text
                 }}
               />
-              <Area 
-                type="monotone" 
-                dataKey="members" 
-                stroke="#3b82f6" 
-                strokeWidth={2} 
-                fill="url(#memberGradient)" 
-              />
-              <Line 
-                type="monotone" 
-                dataKey="target" 
-                stroke="#94a3b8" 
-                strokeWidth={2} 
-                strokeDasharray="5 5" 
-              />
-            </AreaChart>
+              <Bar dataKey="revenue" fill="#10b981" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="expenses" fill="#f87171" radius={[2, 2, 0, 0]} />
+            </BarChart>
           </ResponsiveContainer>
         </div>
-
-        {/* Class Distribution */}
-        <div className="chart-card">
-          <div className="chart-header">
-            <h3 className="chart-title">Class Distribution</h3>
-            <span className="chart-subtitle">Current Month</span>
-          </div>
-          <ResponsiveContainer width="100%" height={280}>
-            <PieChart>
-              <Pie
-                data={classData}
-                cx="50%"
-                cy="50%"
-                outerRadius={90}
-                innerRadius={50}
-                dataKey="value"
-                label={({name, value}) => `${name}: ${value}%`}
-                labelLine={false}
-              >
-                {classData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip formatter={(value) => [`${value}%`, 'Percentage']} />
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="pie-legend">
-            {classData.map((entry, index) => (
-              <div key={index} className="pie-legend-item">
-                <div className="pie-legend-dot" style={{backgroundColor: entry.color}}></div>
-                <span className="pie-legend-text">{entry.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
-
-      {/* Revenue Chart */}
-      <div className="chart-card full-width">
-        <div className="chart-header">
-          <h3 className="chart-title">Revenue & Expenses</h3>
-          <div className="chart-legend">
-            <div className="legend-item">
-              <div className="legend-dot emerald"></div>
-              <span className="legend-text">Revenue</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-dot red"></div>
-              <span className="legend-text">Expenses</span>
-            </div>
-          </div>
-        </div>
-        <ResponsiveContainer width="100%" height={320}>
-          <BarChart data={revenueData} barGap={8}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-            <XAxis dataKey="month" stroke="#64748b" fontSize={12} />
-            <YAxis stroke="#64748b" fontSize={12} />
-            <Tooltip 
-              formatter={(value, name) => [`$${value.toLocaleString()}`, name === 'revenue' ? 'Revenue' : 'Expenses']}
-              contentStyle={{ 
-                backgroundColor: 'white', 
-                border: '1px solid #e2e8f0', 
-                borderRadius: '8px', 
-                boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' 
-              }}
-            />
-            <Bar dataKey="revenue" fill="#10b981" radius={[2, 2, 0, 0]} />
-            <Bar dataKey="expenses" fill="#f87171" radius={[2, 2, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
+    );
+  };
 
   const renderKanban = () => (
     <div className="dashboard-content">
@@ -409,124 +465,50 @@ const Dashboard = () => {
     </div>
   );
 
-  // const renderCalendar = () => (
-  //   <div className="calendar-container">
-  //     <div className="calendar-header">
-  //       <div className="calendar-title-section">
-  //         <h3 className="calendar-title">Calendar</h3>
-  //         <p className="calendar-subtitle">June 2024</p>
-  //       </div>
-  //       <div className="calendar-view-buttons">
-  //         {['Today', 'Week', 'Month'].map((view, index) => (
-  //           <button
-  //             key={index}
-  //             className={`view-btn ${index === 0 ? 'active' : ''}`}
-  //           >
-  //             {view}
-  //           </button>
-  //         ))}
-  //       </div>
-  //     </div>
-      
-  //     {/* Calendar Header */}
-  //     <div className="calendar-days-header">
-  //       {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-  //         <div key={day} className="calendar-day-header">
-  //           {day}
-  //         </div>
-  //       ))}
-  //     </div>
-      
-  //     {/* Calendar Grid */}
-  //     <div className="calendar-grid">
-  //       {Array.from({length: 35}, (_, i) => {
-  //         const day = i - 5;
-  //         const isCurrentMonth = day > 0 && day <= 30;
-  //         const hasEvent = [5, 12, 18, 25].includes(day);
-  //         const isToday = day === 21;
-          
-  //         return (
-  //           <div 
-  //             key={i} 
-  //             className={`calendar-day ${
-  //               isCurrentMonth 
-  //                 ? isToday 
-  //                   ? 'today' 
-  //                   : 'current-month' 
-  //                 : 'other-month'
-  //             }`}
-  //           >
-  //             {isCurrentMonth && (
-  //               <>
-  //                 <div className={`day-number ${isToday ? 'today' : ''}`}>
-  //                   {day}
-  //                 </div>
-  //                 {hasEvent && (
-  //                   <div className="day-events">
-  //                     <div className="event blue">
-  //                       Yoga
-  //                     </div>
-  //                     {day === 18 && (
-  //                       <div className="event emerald">
-  //                         Cardio
-  //                       </div>
-  //                     )}
-  //                   </div>
-  //                 )}
-  //               </>
-  //             )}
-  //           </div>
-  //         );
-  //       })}
-  //     </div>
-  //   </div>
-  // );
-
   return (
     <div className="dashboard">
       <div className="dashboard-container">
         {/* Header */}
         <div className="dashboard-header">
           <div className="header-content">
-            
             <div className="header-text">
               <h1 className="header-title">
                 Admin Dashboard
               </h1>
               <p className="header-subtitle">Welcome back! Here's what's happening today.</p>
             </div>
+            <DarkModeToggle />
           </div>
         </div>
 
-    {/* Navigation */}
-{/* Navigation */}
-<div className="glass-navigation-bar">
-  <ul className="glass-nav-list">
-    {[
-      { id: 'overview', label: 'Overview', icon: '📊' },
-      { id: 'charts', label: 'Analytics', icon: '📈' },
-      { id: 'kanban', label: 'Tasks', icon: '📋' },
-      { id: 'calendar', label: 'Calendar', icon: '📅' }
-    ].map(item => (
-      <li key={item.id} className="glass-nav-element">
-        <button
-          className={`crystal-nav-control ${activeView === item.id ? 'active-state' : ''}`}
-          onClick={() => setActiveView(item.id)}
-        >
-          <span className="premium-nav-symbol">{item.icon}</span>
-          <span>{item.label}</span>
-        </button>
-      </li>
-    ))}
-  </ul>
-</div>
+        {/* Navigation */}
+        <div className="glass-navigation-bar">
+          <ul className="glass-nav-list">
+            {[
+              { id: 'overview', label: 'Overview', icon: '📊' },
+              { id: 'charts', label: 'Analytics', icon: '📈' },
+              { id: 'kanban', label: 'Tasks', icon: '📋' },
+              { id: 'calendar', label: 'Calendar', icon: '📅' }
+            ].map(item => (
+              <li key={item.id} className="glass-nav-element">
+                <button
+                  className={`crystal-nav-control ${activeView === item.id ? 'active-state' : ''}`}
+                  onClick={() => setActiveView(item.id)}
+                >
+                  <span className="premium-nav-symbol">{item.icon}</span>
+                  <span>{item.label}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         {/* Content */}
         <div className="dashboard-main">
           {activeView === 'overview' && renderOverview()}
           {activeView === 'charts' && renderCharts()}
           {activeView === 'kanban' && renderKanban()}
-            {activeView === 'calendar' && <Calendar />}
+          {activeView === 'calendar' && <Calendar />}
         </div>
       </div>
     </div>
